@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "lint": "eslint **/*.{js,jsx}",
-    "lint:fix": "eslint **/*.{js,jsx} --fix"
+    "lint:fix": "eslint **/*.{js,jsx} --fix",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
     "prettier": "2.5.1"
   }
 }
