@@ -1,4 +1,5 @@
 const {convertToCents} = require('../../utils');
+const {message} = require('../../constants');
 
 /**
  * CashInCommission class will calculate the commission fee for cash in transaction
@@ -25,7 +26,7 @@ class CashInCommission {
     const maxThreshold = this.config?.max?.amount;
 
     if (!amount || !percents || !maxThreshold) {
-      return 'Transaction incomplete';
+      return message.transaction_error;
     }
 
     const commission = amount * (percents / 100);

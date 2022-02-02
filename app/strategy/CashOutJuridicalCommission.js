@@ -1,7 +1,8 @@
 const {convertToCents} = require('../../utils');
+const {message} = require('../../constants');
 
 /**
- * CashOutJuridicalCommission class will calculate the commission fee for cash out transaction
+ * CashOutJuridicalCommission class will calculate the commission fee for juridical cash out transaction
  */
 class CashOutJuridicalCommission {
   /**
@@ -25,7 +26,7 @@ class CashOutJuridicalCommission {
     const minThreshold = this.config?.min?.amount;
 
     if (!amount || !percents || !minThreshold) {
-      return 'Transaction incomplete';
+      return message.transaction_error;
     }
 
     const commission = amount * (percents / 100);
