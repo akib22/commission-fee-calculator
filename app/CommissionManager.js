@@ -1,4 +1,5 @@
 const {transactionTypes} = require('../constants');
+const {CashInCommission} = require('./strategy');
 
 /**
  * CommissionManager class will decide, which strategy will follow by each transaction
@@ -26,10 +27,11 @@ class CommissionManager {
 
     const transactionId = `${type}_${userType}`;
 
-    console.log(this);
-
     if (transactionId.startsWith(transactionTypes.CASH_IN)) {
-      return 0;
+      return new CashInCommission(
+        transaction,
+        this[transactionTypes.CASH_IN]
+      ).calculate();
     }
 
     if (transactionId.startsWith(transactionTypes.CASH_OUT_JURIDICAL)) {
