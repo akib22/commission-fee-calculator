@@ -1,3 +1,5 @@
+const {convertToCents} = require('../../utils');
+
 /**
  * CashOutJuridicalCommission class will calculate the commission fee for cash out transaction
  */
@@ -29,9 +31,12 @@ class CashOutJuridicalCommission {
     const commission = amount * (percents / 100);
 
     /* if the commission is less than min commission fee,
-     * min commission will return otherwise calculated commission will return
+     * min commission will return otherwise calculated commission will return as cents
      */
-    return commission < minThreshold ? minThreshold : commission;
+
+    return convertToCents(
+      commission < minThreshold ? minThreshold : commission
+    );
   }
 }
 

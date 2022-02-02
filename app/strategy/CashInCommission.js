@@ -1,3 +1,5 @@
+const {convertToCents} = require('../../utils');
+
 /**
  * CashInCommission class will calculate the commission fee for cash in transaction
  */
@@ -29,9 +31,11 @@ class CashInCommission {
     const commission = amount * (percents / 100);
 
     /* if the commission is greater than max commission fee,
-     * max commission will return otherwise calculated commission will return
+     * max commission will return otherwise calculated commission will return cents
      */
-    return commission > maxThreshold ? maxThreshold : commission;
+    return convertToCents(
+      commission > maxThreshold ? maxThreshold : commission
+    );
   }
 }
 

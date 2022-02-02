@@ -2,7 +2,12 @@ require('dotenv').config();
 
 const {readFile} = require('fs');
 const {resolve} = require('path');
-const {jsonParser, terminalLog, error} = require('./utils');
+const {
+  jsonParser,
+  terminalLog,
+  error,
+  ceilAndConvertToEuro,
+} = require('./utils');
 const {message} = require('./constants');
 const {CaseIn, CashOutJuridical, CashOutNatural} = require('./services');
 const CommissionManager = require('./app/CommissionManager');
@@ -31,7 +36,7 @@ readFile(
 
       parsedTransactions?.forEach(transaction => {
         const commission = commissionManager.getCommission(transaction);
-        terminalLog(commission.toFixed(2));
+        terminalLog(ceilAndConvertToEuro(commission));
       });
     });
   }
