@@ -32,7 +32,7 @@ readFile(
 
       parsedTransactions?.forEach(transaction => {
         const commission = commissionManager.getCommission(transaction);
-        console.log(commission);
+        console.log(commission.toFixed(2));
       });
     });
   }

@@ -1,5 +1,9 @@
 const {transactionTypes} = require('../constants');
-const {CashInCommission, CashOutJuridicalCommission} = require('./strategy');
+const {
+  CashInCommission,
+  CashOutJuridicalCommission,
+  CashOutNaturalCommission,
+} = require('./strategy');
 
 /**
  * CommissionManager class will decide, which strategy will follow by each transaction
@@ -42,7 +46,10 @@ class CommissionManager {
     }
 
     if (transactionId.startsWith(transactionTypes.CASH_OUT_NATURAL)) {
-      return 0;
+      return new CashOutNaturalCommission(
+        transaction,
+        this[transactionTypes.CASH_OUT_NATURAL]
+      ).calculate();
     }
 
     return 'Transaction type not match';
