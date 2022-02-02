@@ -1,5 +1,4 @@
-const request = require('../utils/request');
-const ErrorHandler = require('../utils/ErrorHandler');
+const {ErrorHandler, request} = require('../utils');
 
 class Service extends ErrorHandler {
   constructor(apiEndPoint) {

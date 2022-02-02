@@ -2,7 +2,8 @@ require('dotenv').config();
 
 const {readFile} = require('fs');
 const {resolve} = require('path');
-const {jsonParser} = require('./utils/jsonParser');
+const {jsonParser, terminalLog, error} = require('./utils');
+const {message} = require('./constants');
 const {CaseIn, CashOutJuridical, CashOutNatural} = require('./services');
 const CommissionManager = require('./app/CommissionManager');
 
@@ -11,15 +12,13 @@ readFile(
   {encoding: 'utf8'},
   (err, transactions) => {
     if (err) {
-      process.stderr.write('input file error\n');
-      process.exit(1);
+      error(message.input_file_error);
     }
 
     const parsedTransactions = jsonParser(transactions);
 
     if (!parsedTransactions) {
-      process.stderr.write('json format not correct\n');
-      process.exit(1);
+      error(message.json_format_error);
     }
 
     // fetch commission fee's configurations
@@ -32,7 +31,7 @@ readFile(
 
       parsedTransactions?.forEach(transaction => {
         const commission = commissionManager.getCommission(transaction);
-        console.log(commission.toFixed(2));
+        terminalLog(commission.toFixed(2));
       });
     });
   }
