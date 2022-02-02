@@ -4,6 +4,7 @@ const {readFile} = require('fs');
 const {resolve} = require('path');
 const {jsonParser} = require('./utils/jsonParser');
 const {CaseIn, CashOutJuridical, CashOutNatural} = require('./services');
+const CommissionManager = require('./app/CommissionManager');
 
 readFile(
   resolve(process.argv[2] || ''),
@@ -23,12 +24,16 @@ readFile(
 
     // fetch commission fee's configurations
     Promise.all([
-      new CaseIn().get(),
-      new CashOutJuridical().get(),
-      new CashOutNatural().get(),
-    ]).then(result => {
-      console.log(parsedTransactions);
-      console.log(result);
+      new CaseIn().getConfig(),
+      new CashOutJuridical().getConfig(),
+      new CashOutNatural().getConfig(),
+    ]).then(configs => {
+      const commissionManager = new CommissionManager(configs);
+
+      parsedTransactions?.forEach(transaction => {
+        const commission = commissionManager.getCommission(transaction);
+        console.log(commission);
+      });
     });
   }
 );
