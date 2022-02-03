@@ -21,9 +21,9 @@ class CashOutJuridicalCommission {
    * @returns {number | string}
    */
   calculate() {
-    const amount = this.transaction?.operation?.amount;
+    const amount = convertToCents(this.transaction?.operation?.amount);
     const percents = this.config?.percents;
-    const minThreshold = this.config?.min?.amount;
+    const minThreshold = convertToCents(this.config?.min?.amount);
 
     if (!amount || !percents || !minThreshold) {
       return message.transaction_error;
@@ -34,10 +34,7 @@ class CashOutJuridicalCommission {
     /* if the commission is less than min commission fee,
      * min commission will return otherwise calculated commission will return as cents
      */
-
-    return convertToCents(
-      commission < minThreshold ? minThreshold : commission
-    );
+    return commission < minThreshold ? minThreshold : commission;
   }
 }
 

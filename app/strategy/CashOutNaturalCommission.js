@@ -5,7 +5,7 @@ const {message} = require('../../constants');
 
 dayjs.extend(isoWeek);
 
-const transactionAmount = {};
+const weeklyTransactionHistory = {};
 /**
  * CashOutNaturalCommission class will calculate the commission fee for natural cash out transaction
  */
@@ -21,14 +21,15 @@ class CashOutNaturalCommission {
   }
 
   calculate() {
-    const amount = this.transaction?.operation?.amount;
+    const amount = convertToCents(this.transaction?.operation?.amount);
     const percents = this.config?.percents;
-    const weekThreshold = this.config?.week_limit?.amount;
+    const weeklyThreshold = convertToCents(this.config?.week_limit?.amount);
 
-    if (!amount || !percents || !weekThreshold) {
+    if (!amount || !percents || !weeklyThreshold) {
       return message.transaction_error;
     }
 
+    // convert string to date type
     const date = dayjs(this.transaction.date);
 
     // creating unique id based on user's weekly transaction
@@ -36,26 +37,38 @@ class CashOutNaturalCommission {
       this.transaction.user_id
     }_${date.isoWeekYear()}_${date.isoWeek()}`;
 
-    if (!transactionAmount[key]) {
-      transactionAmount[key] = {
-        amount: 0,
-        payableAmount: 0,
+    // initialize weekly transaction history based on unique id
+    if (!weeklyTransactionHistory[key]) {
+      weeklyTransactionHistory[key] = {
+        totalCaseOut: 0,
+        totalCommission: 0,
       };
     }
 
-    transactionAmount[key].amount += amount;
+    weeklyTransactionHistory[key].totalCaseOut += amount;
 
-    if (transactionAmount[key].amount <= weekThreshold) {
+    // if total case out is less than weekly threshold, return 0 commission
+    if (weeklyTransactionHistory[key].totalCaseOut <= weeklyThreshold) {
       return 0;
     }
 
-    const totalPayable =
-      (transactionAmount[key].amount - weekThreshold) * (percents / 100);
+    /**
+     * commission is calculated only from exceeded amount
+     *
+     * calculating commission based on total case out amount
+     */
+    const totalCommission =
+      (weeklyTransactionHistory[key].totalCaseOut - weeklyThreshold) *
+      (percents / 100);
 
-    const commission = totalPayable - transactionAmount[key].payableAmount;
-    transactionAmount[key].payableAmount = totalPayable;
+    // subtraction current case out commission to pervious transaction commission
+    const commission =
+      totalCommission - weeklyTransactionHistory[key].totalCommission;
 
-    return convertToCents(commission);
+    // store the new commission, to calculate next case out commission.
+    weeklyTransactionHistory[key].totalCommission = totalCommission;
+
+    return commission;
   }
 }
 

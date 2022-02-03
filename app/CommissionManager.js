@@ -1,4 +1,4 @@
-const {transactionTypes} = require('../constants');
+const {transactionTypes, message} = require('../constants');
 const {
   CashInCommission,
   CashOutJuridicalCommission,
@@ -52,7 +52,7 @@ class CommissionManager {
       ).calculate();
     }
 
-    return 'Transaction type not match';
+    return message.transaction_type_error;
   }
 }
 

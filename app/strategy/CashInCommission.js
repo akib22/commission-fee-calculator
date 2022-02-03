@@ -21,9 +21,9 @@ class CashInCommission {
    * @returns {number | string}
    */
   calculate() {
-    const amount = this.transaction?.operation?.amount;
+    const amount = convertToCents(this.transaction?.operation?.amount);
     const percents = this.config?.percents;
-    const maxThreshold = this.config?.max?.amount;
+    const maxThreshold = convertToCents(this.config?.max?.amount);
 
     if (!amount || !percents || !maxThreshold) {
       return message.transaction_error;
@@ -34,9 +34,7 @@ class CashInCommission {
     /* if the commission is greater than max commission fee,
      * max commission will return otherwise calculated commission will return cents
      */
-    return convertToCents(
-      commission > maxThreshold ? maxThreshold : commission
-    );
+    return commission > maxThreshold ? maxThreshold : commission;
   }
 }
 

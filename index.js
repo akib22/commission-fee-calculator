@@ -36,7 +36,12 @@ readFile(
 
       parsedTransactions?.forEach(transaction => {
         const commission = commissionManager.getCommission(transaction);
-        terminalLog(ceilAndConvertToEuro(commission));
+
+        if (typeof commission === 'number') {
+          terminalLog(ceilAndConvertToEuro(commission));
+        } else {
+          terminalLog(commission);
+        }
       });
     });
   }
