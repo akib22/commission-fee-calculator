@@ -26,13 +26,13 @@ const data = [
 ];
 
 describe('parse json data into javascript object', () => {
-  it('should return correct json data', () => {
+  test('should return correct json data', () => {
     const input = JSON.stringify(data);
 
     expect(jsonParser(input)).toStrictEqual(data);
   });
 
-  it('should return null, if json format is not corrent', () => {
+  test('should return null, if json format is not corrent', () => {
     expect(jsonParser('')).toBeNull();
   });
 });

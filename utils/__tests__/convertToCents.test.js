@@ -27,7 +27,7 @@ const data = [
 
 describe('convert euro to cents', () => {
   data.forEach(item => {
-    it(`should return ${item.output} for the input ${item.input}`, () => {
+    test(`should return ${item.output} for the input ${item.input}`, () => {
       expect(convertToCents(item.input)).toBe(item.output);
     });
   });
