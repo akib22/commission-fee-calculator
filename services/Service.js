@@ -6,14 +6,8 @@ class Service extends ErrorHandler {
     this.apiEndPoint = apiEndPoint;
   }
 
-  get(params) {
-    return this.asyncError(
-      request({
-        url: this.apiEndPoint,
-        method: 'get',
-        params,
-      })
-    );
+  get() {
+    return this.asyncError(request.get(this.apiEndPoint));
   }
 }
 

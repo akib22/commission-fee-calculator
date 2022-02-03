@@ -9,7 +9,7 @@ const {
   ceilAndConvertToEuro,
 } = require('./utils');
 const {message} = require('./constants');
-const {CaseIn, CashOutJuridical, CashOutNatural} = require('./services');
+const {CashIn, CashOutJuridical, CashOutNatural} = require('./services');
 const CommissionManager = require('./app/CommissionManager');
 
 readFile(
@@ -28,7 +28,7 @@ readFile(
 
     // fetch commission fee's configurations
     Promise.all([
-      new CaseIn().getConfig(),
+      new CashIn().getConfig(),
       new CashOutJuridical().getConfig(),
       new CashOutNatural().getConfig(),
     ]).then(configs => {
