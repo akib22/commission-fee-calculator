@@ -5,9 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
     "lint": "eslint **/*.{js,jsx}",
     "lint:fix": "eslint **/*.{js,jsx} --fix",
     "prepare": "husky install"
+  },
+  "engines": {
+    "node": "16.13.0"
   },
   "repository": {
     "type": "git",
@@ -29,8 +34,15 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jest": "^26.0.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
+    "jest": "^27.4.7",
     "prettier": "2.5.1"
+  },
+  "dependencies": {
+    "axios": "^0.25.0",
+    "dayjs": "^1.10.7",
+    "dotenv": "^15.0.0"
   }
 }
