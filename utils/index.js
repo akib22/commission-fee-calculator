@@ -4,6 +4,7 @@ const ErrorHandler = require('./ErrorHandler');
 const {jsonParser} = require('./jsonParser');
 const {error, terminalLog} = require('./output');
 const request = require('./request');
+const isNumber = require('./isNumber');
 
 module.exports = {
   ceilAndConvertToEuro,
@@ -13,4 +14,5 @@ module.exports = {
   error,
   terminalLog,
   request,
+  isNumber,
 };
