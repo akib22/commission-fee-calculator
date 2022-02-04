@@ -1,6 +1,6 @@
 const dayjs = require('dayjs');
 const isoWeek = require('dayjs/plugin/isoWeek');
-const {convertToCents} = require('../../utils');
+const {convertToCents, isNumber} = require('../../utils');
 const {message} = require('../../constants');
 
 dayjs.extend(isoWeek);
@@ -24,18 +24,24 @@ class CashOutNaturalCommission {
     const amount = convertToCents(this.transaction?.operation?.amount);
     const percents = this.config?.percents;
     const weeklyThreshold = convertToCents(this.config?.week_limit?.amount);
+    const userId = this?.transaction?.user_id;
+    const {date} = this.transaction;
 
-    if (!amount || !percents || !weeklyThreshold) {
+    if (
+      !isNumber(amount) ||
+      !isNumber(percents) ||
+      !isNumber(weeklyThreshold) ||
+      !userId ||
+      !date
+    ) {
       return message.transaction_error;
     }
 
     // convert string to date type
-    const date = dayjs(this.transaction.date);
+    const dateObj = dayjs(date);
 
     // creating unique id based on user's weekly transaction
-    const key = `${
-      this.transaction.user_id
-    }_${date.isoWeekYear()}_${date.isoWeek()}`;
+    const key = `${userId}_${dateObj.isoWeekYear()}_${dateObj.isoWeek()}`;
 
     // initialize weekly transaction history based on unique id
     if (!weeklyTransactionHistory[key]) {

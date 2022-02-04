@@ -1,4 +1,4 @@
-const {convertToCents} = require('../../utils');
+const {convertToCents, isNumber} = require('../../utils');
 const {message} = require('../../constants');
 
 /**
@@ -25,7 +25,7 @@ class CashInCommission {
     const percents = this.config?.percents;
     const maxThreshold = convertToCents(this.config?.max?.amount);
 
-    if (!amount || !percents || !maxThreshold) {
+    if (!isNumber(amount) || !isNumber(percents) || !isNumber(maxThreshold)) {
       return message.transaction_error;
     }
 
