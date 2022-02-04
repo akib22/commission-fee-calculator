@@ -1,4 +1,4 @@
-const {convertToCents} = require('../../utils');
+const {convertToCents, isNumber} = require('../../utils');
 const {message} = require('../../constants');
 
 /**
@@ -25,7 +25,7 @@ class CashOutJuridicalCommission {
     const percents = this.config?.percents;
     const minThreshold = convertToCents(this.config?.min?.amount);
 
-    if (!amount || !percents || !minThreshold) {
+    if (!isNumber(amount) || !isNumber(percents) || !isNumber(minThreshold)) {
       return message.transaction_error;
     }
 

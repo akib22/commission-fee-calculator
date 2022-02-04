@@ -26,6 +26,14 @@ const transitionList = [
     result: 5.999999999999999,
   },
   {
+    date: '2016-01-05',
+    user_id: 1,
+    user_type: 'natural',
+    type: 'cash_in',
+    operation: {amount: 0, currency: 'EUR'},
+    result: 0,
+  },
+  {
     date: '2016-01-06',
     user_id: 2,
     user_type: 'juridical',
@@ -35,11 +43,27 @@ const transitionList = [
   },
   {
     date: '2016-01-06',
+    user_id: 2,
+    user_type: 'juridical',
+    type: 'cash_out',
+    operation: {amount: 0, currency: 'EUR'},
+    result: 50,
+  },
+  {
+    date: '2016-01-06',
     user_id: 1,
     user_type: 'natural',
     type: 'cash_out',
     operation: {amount: 30000, currency: 'EUR'},
     result: 8700,
+  },
+  {
+    date: '2016-01-06',
+    user_id: 1,
+    user_type: 'natural',
+    type: 'cash_out',
+    operation: {amount: 0, currency: 'EUR'},
+    result: 0,
   },
   {
     date: '2016-01-07',
@@ -118,6 +142,14 @@ const transitionList = [
     type: 'cash_out',
     operation: {currency: 'EUR'},
     result: 'Transaction incomplete',
+  },
+  {
+    date: '2016-02-15',
+    user_id: 1,
+    user_type: 'juridical',
+    type: 'cash_out',
+    operation: {amount: 0.0, currency: 'EUR'},
+    result: 50,
   },
   {
     date: '2016-02-15',
